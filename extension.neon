@@ -31,6 +31,7 @@ parameters:
         - stubs/Redis/Connection.stub
         - stubs/Logger.stub
         - stubs/EnumeratesValues.stub
+        - stubs/GrimzyBuilder.stub
     universalObjectCratesClasses:
         - Illuminate\Http\Request
     earlyTerminatingFunctionCalls:

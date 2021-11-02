@@ -1,0 +1,26 @@
+<?php
+
+namespace Grimzy\LaravelMysqlSpatial\Eloquent;
+
+use Grimzy\LaravelMysqlSpatial\Types\GeometryInterface;
+use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialExpression;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+
+/**
+ * @template TModelClass of \Illuminate\Database\Eloquent\Model
+ * @extends EloquentBuilder<TModelClass>
+ */
+class Builder extends EloquentBuilder
+{
+    /**
+     * @param  array<model-property<TModelClass>, mixed>  $values
+     * @return int
+     */
+    public function update(array $values);
+
+    /**
+     * @param GeometryInterface $geometry
+     * @return SpatialExpression
+     */
+    protected function asWKT(GeometryInterface $geometry);
+}
