@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Tests\Features\ReturnTypes\CustomBuilder2;
+use Tests\Rules\Data\Foo;
 use function get_class;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\AsArrayObject;
@@ -56,6 +58,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @return UserBuilder<User>
+     */
+    public function newEloquentBuilder($query): UserBuilder
+    {
+        return new UserBuilder($query);
+    }
+
     public function id(): int
     {
         return $this->id;
@@ -64,20 +75,6 @@ class User extends Authenticatable
     public function getAllCapsName(): string
     {
         return Str::upper($this->name);
-    }
-
-    public function scopeActive(Builder $query): Builder
-    {
-        return $query->where('active', 1);
-    }
-
-    /**
-     * @param  Builder<User>  $query
-     * @return Builder<User>
-     */
-    public function scopeWhereActive(Builder $query): Builder
-    {
-        return $query->where('active', 1);
     }
 
     /** @phpstan-return BelongsTo<Group, User> */
@@ -155,5 +152,27 @@ class User extends Authenticatable
     public function setActive(): void
     {
         $this->active = 1;
+    }
+}
+
+/**
+ * @extends Builder<User>
+ */
+class UserBuilder extends Builder
+{
+    /**
+     * @return UserBuilder<User>
+     */
+    public function active(): self
+    {
+        return $this->where('active', 1);
+    }
+
+    /**
+     * @return UserBuilder<User>
+     */
+    public function whereActive(): self
+    {
+        return $this->where('active', 1);
     }
 }
