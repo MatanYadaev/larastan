@@ -6,6 +6,7 @@ namespace Tests\Features\Methods;
 
 use App\Thread;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -261,5 +262,11 @@ class ModelExtension
     public function testMin(User $user)
     {
         return $user->min('id');
+    }
+
+    /** @phpstan-return Carbon */
+    public function testDeletedAtCast(User $user)
+    {
+        return $user->deleted_at;
     }
 }
