@@ -265,8 +265,8 @@ class ModelExtension
     }
 
     /** @phpstan-return Carbon */
-    public function testDeletedAtCast(User $user)
+    public function testDeletedAtCast()
     {
-        return $user->deleted_at;
+        return User::onlyTrashed()->firstOrFail()->deleted_at;
     }
 }
